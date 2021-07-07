@@ -1,0 +1,48 @@
+---
+- name: check for ssh
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Wait for readiness
+      wait_for:
+        port: 22
+        host: '{{ ansible_host }}'
+        search_regex: OpenSSH
+        delay: 5
+      connection: local
+
+- name: server1
+  hosts: server1
+  become: yes
+  roles:
+    - geerlingguy.docker
+    - cloudalchemy.node_exporter
+  pre_tasks:
+  - name: update all
+    apt:
+      update_cache: yes
+  tasks:
+    - name: Install pip3
+      apt:
+        name:
+          - python3-pip
+    - name: Install pip docker
+      pip:
+        name: 
+          - docker
+          - docker-compose
+    - name: Copy docker compose file
+      copy:
+        src: files/wp.yml
+        dest: docker-compose.yml
+    - name: Run docker compose file
+      docker_compose:
+        project_src: .
+
+- name: server2
+  hosts: server2
+  become: yes
+  roles:
+    - cloudalchemy.prometheus
+    - cloudalchemy.grafana
+    - cloudalchemy.node_exporter

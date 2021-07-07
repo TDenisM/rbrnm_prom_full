@@ -1,0 +1,10 @@
+---
+pushgateway_version: 1.3.0
+pushgateway_web_listen_address: "0.0.0.0:9991"
+pushgateway_web_external_url: ""
+pushgateway_path: /opt/pushgateway
+pushgateway_persistence: true
+
+pushgateway_config_flags_extra: {}
+# pushgateway_config_flags_extra:
+#   persistence.interval: '5m'

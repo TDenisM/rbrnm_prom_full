@@ -1,0 +1,20 @@
+root@s1:~# service node_exporter status
+● node_exporter.service - Prometheus Node Exporter
+     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2021-07-06 11:32:39 UTC; 14min ago
+   Main PID: 13024 (node_exporter)
+      Tasks: 6 (limit: 1073)
+     Memory: 16.1M
+     CGroup: /system.slice/node_exporter.service
+             └─13024 /opt/node_exporter/node_exporter --collector.systemd --collector.processes --collector.interrupts --collector.textfile --collector.textfile.directory=/var/lib/node_exporter --web.listen-address=0.0.0.>
+
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=thermal_zone
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=time
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=timex
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=udp_queues
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=uname
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=vmstat
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=xfs
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:113 collector=zfs
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.597Z caller=node_exporter.go:195 msg="Listening on" address=0.0.0.0:9100
+Jul 06 11:32:39 s1 node_exporter[13024]: level=info ts=2021-07-06T11:32:39.598Z caller=tls_config.go:191 msg="TLS is disabled." http2=false

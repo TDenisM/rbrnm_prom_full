@@ -1,0 +1,65 @@
+---
+#Main installation actions
+#https://clickhouse.yandex/docs/en/getting_started/index.html#installation
+
+- name: Install by APT | Apt-key add repo key
+  apt_key:
+    keyserver: "{{ clickhouse_repo_keyserver }}"
+    id: "{{ clickhouse_repo_key }}"
+  become: true
+  tags: [install]
+
+- name: Install by APT | Remove old repo
+  apt_repository:
+    repo: "{{ clickhouse_repo_old }}"
+    state: absent
+  become: true
+  when: clickhouse_repo_old is defined
+  tags: [install]
+
+- name: Install by APT | Repo installation
+  apt_repository:
+    repo: "{{ clickhouse_repo }}"
+    state: present
+  become: true
+  tags: [install]
+
+- name: Download pip
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: .
+    mode: 0770
+
+- name: Install lxml and pip requirements
+  apt:
+    name:
+      - python3-distutils
+      - python3-apt
+    state: latest
+  
+
+- name: Install pip
+  shell: python3 ./get-pip.py
+
+- name: Install lxml
+  pip:
+    name: lxml
+    executable: pip3
+
+- name: Install by APT | Package installation
+  apt:
+    name: "{{ clickhouse_package | map('regex_replace', '$', '=' + clickhouse_version) | list }}"
+    state: present
+    update_cache: true
+  become: true
+  when: clickhouse_version != 'latest'
+  tags: [install]
+
+- name: Install by APT | Package installation
+  apt:
+    name: "{{ clickhouse_package }}"
+    state: "{{ clickhouse_version }}"
+    update_cache: true
+  become: true
+  when: clickhouse_version == 'latest'
+  tags: [install]

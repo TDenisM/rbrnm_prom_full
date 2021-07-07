@@ -1,0 +1,14 @@
+groups:
+- name: InstanceUp
+  interval: 10s
+  rules:
+  - alert: InstanceUp
+    expr: histogram_quantile(0.95, rate(prometheus_tsdb_compaction_duration_seconds_bucket[30m])) >= 1
+    for: 10s
+    labels:
+      severity: info
+      env: dev
+      labelscount: "{{ len $labels }}"
+    annotations:
+      summary: Instance is up!
+      description: "{{ $labels.instance }} {{ $labels.job }} {{ __name__ }}"

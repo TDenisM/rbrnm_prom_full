@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<yandex>
+    <clickhouse_remote_servers>
+        <local>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>{{ hostvars["server1"]["ansible_hostname"] }}</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>{{ hostvars["server2"]["ansible_hostname"]  }}</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>{{ hostvars["server3"]["ansible_hostname"] }}</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>{{ hostvars["server4"]["ansible_hostname"]  }}</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </local>
+    </clickhouse_remote_servers>
+
+    <zookeeper-servers>
+        <node index="1">
+            <host>{{ hostvars["server1"]["ansible_hostname"] }}</host>
+            <port>2181</port>
+        </node>
+        <node index="2">
+            <host>{{ hostvars["server2"]["ansible_hostname"] }}</host>
+            <port>2181</port>
+        </node>
+        <node index="3">
+            <host>{{ hostvars["server3"]["ansible_hostname"] }}</host>
+            <port>2181</port>
+        </node>
+    </zookeeper-servers>
+
+    <macros>
+	<cluster>local</cluster>
+        <replica>{{ ansible_hostname }}</replica>
+        <shard>{{ shard_id }}</shard>
+    </macros>
+</yandex>

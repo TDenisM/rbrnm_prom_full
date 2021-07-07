@@ -1,0 +1,6 @@
+vagrant@s1:~$ sudo docker logs -f  5e7309bbcb56
+W0706 11:32:38.091821       1 manager.go:288] Could not configure a source for OOM detection, disabling OOM events: open /dev/kmsg: no such file or directory
+I0706 11:42:09.728114       1 manager.go:1193] Exiting thread watching subcontainers
+I0706 11:42:09.728136       1 manager.go:403] Exiting global housekeeping thread
+I0706 11:42:09.730063       1 cadvisor.go:247] Exiting given signal: terminated
+W0706 11:42:10.877782       1 manager.go:288] Could not configure a source for OOM detection, disabling OOM events: open /dev/kmsg: no such file or directory
